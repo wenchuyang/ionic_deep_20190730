@@ -1,5 +1,7 @@
 {
   "name": "deep",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }
