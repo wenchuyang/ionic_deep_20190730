@@ -1,4 +1,4 @@
-# ionic初步
+# ionic初步（以ionic3为模板）
 ## 新建项目
 1. 安装ionic和cordova `npm install -g ionic cordova`
 当然，如果曾经安装过的话这一步请跳过。
@@ -19,5 +19,14 @@ config.xml文件中`<name>MyApp</name>`改成自己APP的名字。同时可以�
 2. 修改图标和启动动画
 在resources文件夹中将icon和splash替换掉，然后使用命令`ionic cordova resources [platform] [icon/splash]`生成各种大小的图标和启动动画，其中后面两个是可选项。platform如果不指定的话会自动生成android和ios两个平台的，icon/splash不指定的话也会生成两个平台的。（该文件夹下的readme文件有说明）
     1. `Error: end() has already been called, so it's too late to start piping`遇见这种错误可能是icon和splash大小不对，改成icon（1024 × 1024），splash（2732 × 2732）
-## 各文件作用
-
+## src里面各文件作用
+node_modules: 存放项目依赖的地方。依赖关系在package.json中，执行`npm install`之后会自动更新此目录下的文件。
+package.json: 
+    1. 项目元数据，比如name,version,author,license,description等等
+    2. scripts模块，这里的功能有点像alias，简化命令。比如下面的
+    ```
+    "scripts": {
+        "livereload": "ionic cordova run android -l --address=192.168.1.88"
+    }
+    ```
+    在package.json文件里边加上这一句之后，`ionic cordova run android -l --address=192.168.1.88`就可以用`npm run livereload`代替了。

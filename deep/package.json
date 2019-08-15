@@ -1,14 +1,15 @@
 {
   "name": "deep",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "wenchuyang",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
     "start": "ionic-app-scripts serve",
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
-    "lint": "ionic-app-scripts lint"
+    "lint": "ionic-app-scripts lint",
+    "livereload": "ionic cordova run android -l --address=192.168.1.88"
   },
   "dependencies": {
     "@angular/animations": "5.2.11",
