@@ -9,6 +9,7 @@
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
+    "ionic:build": "ionic-app-scripts build",
     "livereload": "ionic cordova run android -l --address=192.168.1.88"
   },
   "dependencies": {
