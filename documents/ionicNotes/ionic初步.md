@@ -1,4 +1,4 @@
-# ionic初步（以ionic3为模板）
+# ionic初步(ionic3)
 ## 新建项目
 1. 安装ionic和cordova `npm install -g ionic cordova`
 当然，如果曾经安装过的话这一步请跳过。
@@ -7,6 +7,8 @@
 2. 新建项目 `ionic start helloWorld blank --type=ionic-angular`
 `helloWorld`是你的项目名。`blank`是ionic给我们提供的一个模板，类似这样的模板还有tabs，sidemenu，super，tutorial。`--type=ionic-angular`表示创建的是ionic3的项目，如果需要创建ionic4项目的话，不需要加这句话。
 3. 进入你的项目目录 `cd helloWorld`
+### ionic project version & ionic CLI version
+project版本的话在package.json文件中"ionic-angular"注明，而CLI版本可以在命令行输入`ionic --version`得到。两者可以不一致。
 ## 运行项目
 `ionic serve` 在浏览器中打开你的项目，可以看见你的项目实际效果。
 `cordova platform add android/ios` 添加android或者ios平台
@@ -74,6 +76,7 @@ config.xml文件中`<name>MyApp</name>`改成自己APP的名字。同时可以�
 添加平台的时候下载下来的资源文件，主要是android和ios的应用图标，启动动画等。
 ### www
 www文件夹里边是打包出来的网页的内容，最终的APP加载的是www文件夹下index.html网页。事实上，在这个文件夹下开启http服务，和在项目文件夹下开启ionic serve可以达到同样的效果。
+src下边是我们自己写的代码，而www文件夹下边是ionic serve之后将src下边的代码编译出来的文件。src是给我们看的，www是给浏览器看的。
 ### config.xml
 全局配置文件，我们前面说过，修改app的名字之类的可以在这个文件里边修改。具体的可以点[这里](https://cordova.apache.org/docs/en/latest/config_ref/index.html)
 
@@ -104,4 +107,43 @@ src/index.html下有这样两段代码
 ### service-worker.js
 在构建PWA应用的时候需要用到的一个文件，用来做持久的离线缓存，使得即使是在没有网的情况下，打开桌面快捷方式仍然能够正常浏览应用内容。
 ### index.html
-
+程序的主入口文件，包括scripts，css的引入等。上面我们说到的manifest.json和cordova.js也是在这个文件中引入的。
+### app
+1. main.ts
+`platformBrowserDynamic().bootstrapModule(AppModule);`程序从main.js进入，这里设置了启动module为AppModule。
+2. app.module.ts
+```
+@NgModule({
+  declarations: [ MyApp, HomePage ],
+  imports: [ BrowserModule, IonicModule.forRoot(MyApp) ],
+  bootstrap: [IonicApp],
+  entryComponents: [ MyApp, HomePage ],
+  providers: [ StatusBar, SplashScreen, {provide: ErrorHandler, useClass: IonicErrorHandler} ]
+})
+export class AppModule {}
+```
+这里的`IonicModule.forRoot(MyApp)`将MyApp设置为root component，MyApp在`app.component.ts`中声明，一般是一个空的component，只用来加载其它应用组件。
+3. app.component.ts
+这里设置rootPage的值，默认是`rootPage:any = HomePage;`。
+4. app.html
+app.html起到一个导航的作用，其中`[root]`属性的值一般设置为变量rootPage，我们在app.component.ts中设置过rootPage的值。在ion-nav加载的时候，rootPage引用的HomePage就是根页面。
+## 工作原理
+### ionic angular cordova
+一般来说，ionic经常与angular和cordova一起出现，那么，它们到底是什么？之间又是什么样的关系呢？
+1. ionic css是一套封装好了的移动端UI框架。
+2. cordova是一个工具，将使用网页开发得到的东西进行封装之类的操作，使其变得像Android/IOS原生应用。单纯的web页面不能提交到应用商店。
+3. angular是js库（jQuery也是js库），ionic对angular进行了扩展和封装，利用angular实现了很多适用于移动端的组件。
+所以ionic实际上内在的js是angular库实现的，外层使用ionic css美化，然后使用cordova将其封装成原生应用。
+在实际应用的时候，用户看见的是ionic的表象，比如一个好看的camera按钮。而点击按钮的时候，调用的则是angular，又由angular调用Cordova的相机JavaScript API，Cordova向设备请求权限调用相机应用，设备返回结果给Cordova，Cordova再传送到angular的控制器，angular更新ionic。
+> Ionic应用打开照相机时整个技术栈的工作流程:
+> 1.用户单击按钮
+> 2.按钮调用Angular控制器，控制器会通过javascript API调用cordova。
+> 3.cordova使用原生SDK和设备通信，请求使用照相机应用。
+> 4.设备打开照相机应用(或者请求用户授权)，用户可以照相。
+> 5.用户确定照片之后，照相机应用关闭，把图片数据返回给Cordova。
+> 6.Cordova把图片数据传递到Angular的控制器。
+> 7.图片会更新到Ionic组件中。
+参考：https://user-gold-cdn.xitu.io/2017/11/5/512933854ebe7369d31d1270f0fd281b
+### why? 
+在ionic的文档里边清楚地写出了ionic的目标：Cross-Platform(跨平台), Web Standards-based(基于Web), Beautiful Design(漂亮的设计), Simplicity(简单)。
+基于ionic，我们可以使用Web开发技术来开发APP。Emmm可以少学一门技术了....
