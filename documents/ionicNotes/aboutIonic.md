@@ -1,27 +1,26 @@
-# ionic初步(ionic3)
-## 新建项目
-1. 安装ionic和cordova `npm install -g ionic cordova`
-当然，如果曾经安装过的话这一步请跳过。
-`-g`表示全局安装，如果不指定版本的话会默认安装最新版的。需要指定版本的话在后面加上`@版本号`，`npm install -g ionic@x.x.x cordova@x.x.x`。
-查看自己有没有安装上的话可以查看自己的ionic和cordova版本`ionic -v`，`cordova -v`。
-2. 新建项目 `ionic start helloWorld blank --type=ionic-angular`
-`helloWorld`是你的项目名。`blank`是ionic给我们提供的一个模板，类似这样的模板还有tabs，sidemenu，super，tutorial。`--type=ionic-angular`表示创建的是ionic3的项目，如果需要创建ionic4项目的话，不需要加这句话。
-3. 进入你的项目目录 `cd helloWorld`
-### ionic project version & ionic CLI version
-project版本的话在package.json文件中"ionic-angular"注明，而CLI版本可以在命令行输入`ionic --version`得到。两者可以不一致。
-## 运行项目
-`ionic serve` 在浏览器中打开你的项目，可以看见你的项目实际效果。
-`cordova platform add android/ios` 添加android或者ios平台
-`ionic cordova build android` 构建Android平台
-`ionic cordova run android` 在安卓机或者模拟器上运行你的程序
-`ionic cordova run android -l` livereload，实时加载你对程序的修改
-## 修改程序的基本信息
-1. 修改名字
-config.xml文件中`<name>MyApp</name>`改成自己APP的名字。同时可以修改你想要修改的其它信息。比如description等。
-2. 修改图标和启动动画
-在resources文件夹中将icon和splash替换掉，然后使用命令`ionic cordova resources [platform] [icon/splash]`生成各种大小的图标和启动动画，其中后面两个是可选项。platform如果不指定的话会自动生成android和ios两个平台的，icon/splash不指定的话也会生成两个平台的。（该文件夹下的readme文件有说明）
-    1. `Error: end() has already been called, so it's too late to start piping`遇见这种错误可能是icon和splash大小不对，改成icon（1024 × 1024），splash（2732 × 2732）
-## 项目下各文件作用
+# 工作原理
+## ionic angular cordova
+一般来说，ionic经常与angular和cordova一起出现，那么，它们到底是什么？之间又是什么样的关系呢？
+1. ionic css是一套封装好了的移动端UI框架。
+2. cordova是一个工具，将使用网页开发得到的东西进行封装之类的操作，使其变得像Android/IOS原生应用。单纯的web页面不能提交到应用商店。
+3. angular是js库（jQuery也是js库），ionic对angular进行了扩展和封装，利用angular实现了很多适用于移动端的组件。
+所以ionic实际上内在的js是angular库实现的，外层使用ionic css美化，然后使用cordova将其封装成原生应用。
+在实际应用的时候，用户看见的是ionic的表象，比如一个好看的camera按钮。而点击按钮的时候，调用的则是angular，又由angular调用Cordova的相机JavaScript API，Cordova向设备请求权限调用相机应用，设备返回结果给Cordova，Cordova再传送到angular的控制器，angular更新ionic。
+> Ionic应用打开照相机时整个技术栈的工作流程:
+> 1.用户单击按钮
+> 2.按钮调用Angular控制器，控制器会通过javascript API调用cordova。
+> 3.cordova使用原生SDK和设备通信，请求使用照相机应用。
+> 4.设备打开照相机应用(或者请求用户授权)，用户可以照相。
+> 5.用户确定照片之后，照相机应用关闭，把图片数据返回给Cordova。
+> 6.Cordova把图片数据传递到Angular的控制器。
+> 7.图片会更新到Ionic组件中。
+参考：https://user-gold-cdn.xitu.io/2017/11/5/512933854ebe7369d31d1270f0fd281b
+## 为什么选择ionic
+在ionic的文档里边清楚地写出了ionic的目标：Cross-Platform(跨平台), Web Standards-based(基于Web), Beautiful Design(漂亮的设计), Simplicity(简单)。
+基于ionic，我们可以使用Web开发技术来开发跨平台的APP，而不需要重新去学Android和iOS开发。
+
+# 项目下各文件作用
+## ionic3
 ### node_modules
 存放项目依赖的地方。依赖关系在package.json中，执行`npm install`之后会自动更新此目录下的文件。如果模块不在package.json文件中，可以单独使用`npm install xxx`来安装这个模块。后面加上`--save`表示写入package.json文件的dependencies属性中，加`--save-dev`表示写入到package.json文件的devDependencies属性中。
 ### package.json: 
@@ -102,6 +101,7 @@ src下边是我们自己写的代码，而www文件夹下边是ionic serve之后
 这里可能需要区分一下cordova直接构建的应用和PWA(Progressive Web Apps)的区别。因为这个文件的主要是作用在PWA上。
 src/index.html下有这样两段代码
 ![1566196674_1_.jpg](https://i.loli.net/2019/08/19/j148fvDm5gI7Ub6.png)
+
 默认情况下是这样的，使用cordova构建应用程序，然后生成安装包，安装到移动设备上。如果不需要安装包，让你的应用依托于浏览器，那么可以使用下边默认被注释掉的那段代码，同时把上边的注释掉。前者你可以理解为正常的app，后者像是微信小程序。
 据说用Chrome打开支持PWA的网站之后，点击右上角那三个点，添加至主屏幕，即可将应用快捷方式放到桌面上。然而即使我打开了Chrome添加桌面快捷方式的权限，也只能把它添加到浏览器的主页。所以关于ionic构建PWA应用，不能知道自己是否做对了，所以也就不继续讲这个了。感兴趣的可以自己搜一搜。反正关于manifest.json这个文件大概就是这个样子的了。
 ### service-worker.js
@@ -127,23 +127,43 @@ export class AppModule {}
 这里设置rootPage的值，默认是`rootPage:any = HomePage;`。
 4. app.html
 app.html起到一个导航的作用，其中`[root]`属性的值一般设置为变量rootPage，我们在app.component.ts中设置过rootPage的值。在ion-nav加载的时候，rootPage引用的HomePage就是根页面。
-## 工作原理
-### ionic angular cordova
-一般来说，ionic经常与angular和cordova一起出现，那么，它们到底是什么？之间又是什么样的关系呢？
-1. ionic css是一套封装好了的移动端UI框架。
-2. cordova是一个工具，将使用网页开发得到的东西进行封装之类的操作，使其变得像Android/IOS原生应用。单纯的web页面不能提交到应用商店。
-3. angular是js库（jQuery也是js库），ionic对angular进行了扩展和封装，利用angular实现了很多适用于移动端的组件。
-所以ionic实际上内在的js是angular库实现的，外层使用ionic css美化，然后使用cordova将其封装成原生应用。
-在实际应用的时候，用户看见的是ionic的表象，比如一个好看的camera按钮。而点击按钮的时候，调用的则是angular，又由angular调用Cordova的相机JavaScript API，Cordova向设备请求权限调用相机应用，设备返回结果给Cordova，Cordova再传送到angular的控制器，angular更新ionic。
-> Ionic应用打开照相机时整个技术栈的工作流程:
-> 1.用户单击按钮
-> 2.按钮调用Angular控制器，控制器会通过javascript API调用cordova。
-> 3.cordova使用原生SDK和设备通信，请求使用照相机应用。
-> 4.设备打开照相机应用(或者请求用户授权)，用户可以照相。
-> 5.用户确定照片之后，照相机应用关闭，把图片数据返回给Cordova。
-> 6.Cordova把图片数据传递到Angular的控制器。
-> 7.图片会更新到Ionic组件中。
-参考：https://user-gold-cdn.xitu.io/2017/11/5/512933854ebe7369d31d1270f0fd281b
-### why? 
-在ionic的文档里边清楚地写出了ionic的目标：Cross-Platform(跨平台), Web Standards-based(基于Web), Beautiful Design(漂亮的设计), Simplicity(简单)。
-基于ionic，我们可以使用Web开发技术来开发APP。Emmm可以少学一门技术了....
+
+## ionic4
+1. e2e: 端对端测试文件
+2. node_modules: 存放项目依赖文件。其中依赖关系在package.json文件中注明，执行`npm install`之后会自动更新此目录下的文件。
+3. platforms: 添加平台之后会自动生成，目录下存放生成的android和ios资源文件。
+4. plugins: 存放cordova安装的插件，主要是跟设备交互需要的插件。
+5. resources: 添加平台的时候download下来的资源文件，存放启动动画和图标之类的。
+6. src: 项目工作目录
+   1. app: 应用根目录，包括组件，页面，服务，模块等，新建页面之类的都在这里。
+   2. assets: 资源目录，存放静态文件如图片，js框架等
+   3. environment: 。。。。
+   4. global.scss: 全局css文件
+   5. index.html, main.ts: index入口文件和主入口文件
+   6. karma.conf.js/test.js：测试相关的配置文件
+   7. polyfills.ts: 这个文件包含Angular需要的填充，并在应用程序之前加载
+7. www: `ionic build --prod` 生成的单页面静态资源文件
+8. angular.json: angular配置文件
+9. config.xml: 打包成APP的配置文件
+10. ionic.config.json: ionic项目配置文件
+11. package.json: 配置项目的元数据（包括版本号，项目名，作者，项目描述等信息）以及项目依赖。
+12. tsconfig.json: TypeScript项目的根目录，指定用来编译这个项目的根文件和编译选项
+13. tslint.json: TypeScript校验
+
+### page, component, service, directive
+#### page
+页面信息
+
+![page](https://i.loli.net/2019/06/19/5d09c6e49d4d626654.png)
+#### component
+页面组件
+
+![component](https://i.loli.net/2019/06/19/5d09c6e49d50588498.png)
+#### servive
+用来封装可复用的业务逻辑代码
+
+![service](https://i.loli.net/2019/06/19/5d09c6e49d4d651340.png)
+#### directive
+可成为DOM指定扩展行为，或者改变html原有组件默认的行为，比如给按钮添加声音。
+
+![directive](https://i.loli.net/2019/06/19/5d09c6e55faa642891.png)
