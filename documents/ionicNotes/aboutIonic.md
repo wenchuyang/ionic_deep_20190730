@@ -102,7 +102,7 @@ src下边是我们自己写的代码，而www文件夹下边是ionic serve之后
 src/index.html下有这样两段代码
 ![1566196674_1_.jpg](https://i.loli.net/2019/08/19/j148fvDm5gI7Ub6.png)
 
-默认情况下是这样的，使用cordova构建应用程序，然后生成安装包，安装到移动设备上。如果不需要安装包，让你的应用依托于浏览器，那么可以使用下边默认被注释掉的那段代码，同时把上边的注释掉。前者你可以理解为正常的app，后者像是微信小程序。
+默认情况下是这样的，使用cordova构建应用程序，然后生成安装包，安装到移动设备上。如果不需要安装包，让你的应用依托于浏览器，那么可以使用下边默认被注释掉的那段代码，同时把上边的注释掉。前者你可以理解为普通的app，后者像是微信小程序。
 据说用Chrome打开支持PWA的网站之后，点击右上角那三个点，添加至主屏幕，即可将应用快捷方式放到桌面上。然而即使我打开了Chrome添加桌面快捷方式的权限，也只能把它添加到浏览器的主页。所以关于ionic构建PWA应用，不能知道自己是否做对了，所以也就不继续讲这个了。感兴趣的可以自己搜一搜。反正关于manifest.json这个文件大概就是这个样子的了。
 ### service-worker.js
 在构建PWA应用的时候需要用到的一个文件，用来做持久的离线缓存，使得即使是在没有网的情况下，打开桌面快捷方式仍然能够正常浏览应用内容。
@@ -127,6 +127,20 @@ export class AppModule {}
 这里设置rootPage的值，默认是`rootPage:any = HomePage;`。
 4. app.html
 app.html起到一个导航的作用，其中`[root]`属性的值一般设置为变量rootPage，我们在app.component.ts中设置过rootPage的值。在ion-nav加载的时候，rootPage引用的HomePage就是根页面。
+
+### `ionic g <type> <name>`
+<type>包括page，component，directive，pipe，provider，tabs
+#### page
+页面信息
+#### component
+页面组件，可复用。组件实例化的时候，页面会创建一个DOM，这个DOM提供封装好了的template，css和js，让我们可以正常操作组件提供的功能，
+#### directive
+directive允许你给DOM元素附加行为，相对于component而言，directive没有视图呈现，你可以在一个DOM上加很多个directive。并且，component元素上面同样可以添加directive。
+#### pipe
+管道，相当于filter（过滤器）。以特定的规则进行过滤。比如你需要的时间格式为"MM/dd/yyyy"，那么你可以用下面的语句。其中`|`就是过滤器的标识。
+`<p>My birthday is {{ birthday | date:"MM/dd/yyyy" }} </p>`
+#### provider
+就是ionic4的service，后者是ng的叫法。provider的要点在于封装，复用。当你重复的需要一个方法的时候，可以考虑将它封装起来，在任意地方调用。
 
 ## ionic4
 1. e2e: 端对端测试文件
@@ -153,17 +167,19 @@ app.html起到一个导航的作用，其中`[root]`属性的值一般设置为�
 ### page, component, service, directive
 #### page
 页面信息
-
 ![page](https://i.loli.net/2019/06/19/5d09c6e49d4d626654.png)
-#### component
-页面组件
 
+#### component
+页面组件，可复用。
+组件实例化的时候，页面会创建一个DOM，这个DOM提供封装好了的template，css和js，让我们可以正常操作组件提供的功能，
 ![component](https://i.loli.net/2019/06/19/5d09c6e49d50588498.png)
+
 #### servive
 用来封装可复用的业务逻辑代码
-
 ![service](https://i.loli.net/2019/06/19/5d09c6e49d4d651340.png)
+
 #### directive
 可成为DOM指定扩展行为，或者改变html原有组件默认的行为，比如给按钮添加声音。
-
 ![directive](https://i.loli.net/2019/06/19/5d09c6e55faa642891.png)
+
+
