@@ -174,7 +174,7 @@ directive允许你给DOM元素附加行为，相对于component而言，directiv
 组件实例化的时候，页面会创建一个DOM，这个DOM提供封装好了的template，css和js，让我们可以正常操作组件提供的功能，
 ![component](https://i.loli.net/2019/06/19/5d09c6e49d50588498.png)
 
-#### servive
+#### service
 用来封装可复用的业务逻辑代码
 ![service](https://i.loli.net/2019/06/19/5d09c6e49d4d651340.png)
 

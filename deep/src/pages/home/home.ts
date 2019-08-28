@@ -11,4 +11,10 @@ export class HomePage {
 
   }
 
+  goToDetail(){
+    this.navCtrl.push("DetailPage", {
+      "time": new Date()
+    });
+  }
+
 }
