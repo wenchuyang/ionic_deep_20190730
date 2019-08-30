@@ -98,7 +98,6 @@
     <plugin name="cordova-plugin-device" spec="2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <plugin name="cordova-sqlite-storage" spec="3.3.0" />
     <plugin name="cordova-plugin-crosswalk-webview" spec="2.4.0">
         <variable name="XWALK_VERSION" value="23+" />
         <variable name="XWALK_LITEVERSION" value="xwalk_core_library_canary:17+" />
@@ -108,4 +107,5 @@
     </plugin>
     <allow-navigation href="http://192.168.1.88:8100" sessionid="a8328dd5" />
     <engine name="android" spec="7.1.4" />
+    <plugin name="cordova-sqlite-storage" spec="3.3.0" />
 </widget>

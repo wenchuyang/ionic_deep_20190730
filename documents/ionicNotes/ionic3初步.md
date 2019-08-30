@@ -21,12 +21,25 @@ config.xml文件中`<name>MyApp</name>`改成自己APP的名字。同时可以�
 在resources文件夹中将icon和splash替换掉，然后使用命令`ionic cordova resources [platform] [icon/splash]`生成各种大小的图标和启动动画，其中后面两个是可选项。platform如果不指定的话会自动生成android和ios两个平台的，icon/splash不指定的话也会生成两个平台的。（该文件夹下的readme文件有说明）
     1. `Error: end() has already been called, so it's too late to start piping`遇见这种错误可能是icon和splash大小不对，改成icon（1024 × 1024），splash（2732 × 2732）
 ## 开发
-1. add page `ionic g page newpage`
+### 添加页面 `ionic g page detail`
+```
+this.navCtrl.push("DetailPage", {
+    "time": new Date()
+});
+```
+进入DetailPage页面，传入的参数是当前时间。
+在detail页面接收参数的话，在constructor里边使用NavParams接收
+```
+constructor(public navParams: NavParams) {
+    this.date = this.navParams.get("time");
+}
+```
+### 连接数据库
+#### Storage
+ionic带的Storage插件可以实现简单的数据存储。为什么说是简单的数据存储？因为它对数据库的操作有限。自带有set和get方法来进行键值对的存取，`set(key, value)`的使用注意第二次运行的话key对应的value值会被覆盖。或许是我没有找到更合适的方法来使用Storage进行复杂数据的存储....
+#### Sqlite
 
 
-
-
-1. 连接数据库
 
 
 

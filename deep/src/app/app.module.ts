@@ -6,7 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import {IonicStorageModule} from "@ionic/storage";
+import {SQLite} from "@ionic-native/sqlite/ngx";
 
 @NgModule({
   declarations: [
@@ -15,8 +15,7 @@ import {IonicStorageModule} from "@ionic/storage";
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -26,6 +25,7 @@ import {IonicStorageModule} from "@ionic/storage";
   providers: [
     StatusBar,
     SplashScreen,
+    SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

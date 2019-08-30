@@ -6,10 +6,11 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>{{date | date:"MM/dd/yyyy HH:mm:ss"}}</ion-title>
+    <ion-title #noteTitle>{{date | date:"MM/dd/yyyy HH:mm:ss"}}</ion-title>
+    <button ion-button (click)="saveNote(noteTitle, note)">Save</button>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-textarea placeholder="Enter notes here..."></ion-textarea>
+  <ion-textarea #note autoresize placeholder="Enter notes here..."></ion-textarea>
 </ion-content>
