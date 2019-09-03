@@ -37,6 +37,7 @@ constructor(public navParams: NavParams) {
 ### 连接数据库
 #### Storage
 ionic带的Storage插件可以实现简单的数据存储。为什么说是简单的数据存储？因为它对数据库的操作有限。自带有set和get方法来进行键值对的存取，`set(key, value)`的使用注意第二次运行的话key对应的value值会被覆盖。或许是我没有找到更合适的方法来使用Storage进行复杂数据的存储....
+在使用的时候
 #### Sqlite
 
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {noteInfoModel} from "../../models/noteInfo";
-import { Storage } from '@ionic/storage'
+import {DaoProvider} from "../../providers/dao/dao";
 
 @Component({
   selector: 'page-home',
@@ -11,11 +11,12 @@ export class HomePage {
 
   notes: Array<noteInfoModel> = [];
 
-  constructor(public navCtrl: NavController, private storage: Storage) {
-    storage.forEach( (item) => {
-      this.notes.push(item);
-      console.log(item);
-    });
+  constructor(public navCtrl: NavController, private dao: DaoProvider) {
+    // dao.searchNote();
+    // storage.forEach( (item) => {
+    //   this.notes.push(item);
+    //   console.log(item);
+    // });
   }
 
   goToDetail(){

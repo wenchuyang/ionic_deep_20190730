@@ -6,7 +6,10 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import {SQLite} from "@ionic-native/sqlite/ngx";
+import { UtilsProvider } from '../providers/utils/utils';
+import { DaoProvider } from '../providers/dao/dao';
+import {HttpClientModule} from "@angular/common/http";
+import {SQLite} from "@ionic-native/sqlite";
 
 @NgModule({
   declarations: [
@@ -15,7 +18,8 @@ import {SQLite} from "@ionic-native/sqlite/ngx";
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -26,7 +30,9 @@ import {SQLite} from "@ionic-native/sqlite/ngx";
     StatusBar,
     SplashScreen,
     SQLite,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UtilsProvider,
+    DaoProvider
   ]
 })
 export class AppModule {}

@@ -1,4 +1,5 @@
 export class noteInfoModel{
-  title: string = "";
+  id: string = "";
+  time: Date = new Date();
   content: string = ""
 }

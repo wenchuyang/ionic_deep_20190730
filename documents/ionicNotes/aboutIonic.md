@@ -141,6 +141,7 @@ directive允许你给DOM元素附加行为，相对于component而言，directiv
 `<p>My birthday is {{ birthday | date:"MM/dd/yyyy" }} </p>`
 #### provider
 就是ionic4的service，后者是ng的叫法。provider的要点在于封装，复用。当你重复的需要一个方法的时候，可以考虑将它封装起来，在任意地方调用。
+generate provider之后会在app.module.ts文件的providers字段下添加这个provider的class。
 
 ## ionic4
 1. e2e: 端对端测试文件
