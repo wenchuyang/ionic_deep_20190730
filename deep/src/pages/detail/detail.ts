@@ -1,9 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, TextInput, ToolbarTitle} from 'ionic-angular';
 import {noteInfoModel} from "../../models/noteInfo";
-import { Storage } from '@ionic/storage'
 import {UtilsProvider} from "../../providers/utils/utils";
-import {MyApp} from "../../app/app.component";
 import {DaoProvider} from "../../providers/dao/dao";
 
 /**
@@ -23,7 +21,7 @@ export class DetailPage {
   date: Date = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private storage: Storage, public utils: UtilsProvider, private dao: DaoProvider) {  //public VS private
+              public utils: UtilsProvider, private dao: DaoProvider) {  //public VS private
     this.date = this.navParams.get("time");
   }
 
@@ -33,6 +31,7 @@ export class DetailPage {
     note.time = this.date;
     note.content = content.value;
     this.dao.insertNote(note);
+    this.navCtrl.pop();
   }
 
 
