@@ -10,15 +10,19 @@ import {DaoProvider} from "../providers/dao/dao";
 })
 export class MyApp {
 
-  rootPage: any;
+  rootPage: any = HomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private dao: DaoProvider) {
     platform.ready().then(() => {
-      dao.dbInit();
+
       statusBar.styleDefault();
       splashScreen.hide();
-      this.rootPage = HomePage;
     });
+  }
+
+  ngOnInit(){
+    this.dao.dbInit();
+    console.log("app初始化完成");
   }
 
 

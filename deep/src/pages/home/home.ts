@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Events, NavController} from 'ionic-angular';
 import {noteInfoModel} from "../../models/noteInfo";
 import {DaoProvider} from "../../providers/dao/dao";
 import {SQLite, SQLiteObject} from "@ionic-native/sqlite";
@@ -12,39 +12,32 @@ export class HomePage {
 
   notes: any = [];
 
-  constructor(public navCtrl: NavController, private dao: DaoProvider, private sqlite: SQLite) {
-
-    this.searchNote();
-
-
+  constructor(public navCtrl: NavController, private dao: DaoProvider,
+              private sqlite: SQLite, private events: Events) {
+    this.getNotes();
   }
 
+  ionViewDidLoad() {
+    this.events.subscribe('reloadPage',() => {
+      this.getNotes();
+    })
+  }
 
-  searchNote = () => {
-    this.sqlite.create({
-      name: 'data.db',
-      location: 'default'
-    }).then((db: SQLiteObject) => {
-      db.executeSql('SELECT * FROM note', []).then((data) => {
-        console.log("SEARCH SUCCESS");
-        console.log(data);
-        let activityValues = [];
-        if (data.rows.length > 0) {
-          for (let i = 0; i < data.rows.length; i++) {
-            activityValues.push(data.rows.item(i));
-          }
-        }
-        this.notes = activityValues;
-      }, (error) => {
-        console.log(error);
-      })
+  getNotes() {
+    this.dao.searchNote().then((values) => {
+      this.notes = values;
     });
-  };
+  }
 
-
-  goToDetail(){
+  goToDetail(id?: string, time?: Date, content?: string){
+    let note = new noteInfoModel();
+    note.id = id || "";
+    note.time = time || new Date();
+    note.content = content || "";
     this.navCtrl.push("DetailPage", {
-      "time": new Date()
+      "id": note.id,
+      "time": note.time,
+      "content": note.content
     });
   }
 

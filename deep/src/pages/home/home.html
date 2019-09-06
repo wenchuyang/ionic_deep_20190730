@@ -7,8 +7,8 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngFor="let note of notes">
-    {{note.time}}
+  <div *ngFor="let note of notes" (click)="goToDetail(note.id, note.time, note.content)">
+    {{note.time | date:"MM/dd/yyyy HH:mm:ss"}}
   </div>
   <button ion-fab mini (click)="goToDetail()"><ion-icon name="add"></ion-icon></button>
 </ion-content>
