@@ -10,6 +10,7 @@ import { UtilsProvider } from '../providers/utils/utils';
 import { DaoProvider } from '../providers/dao/dao';
 import {HttpClientModule} from "@angular/common/http";
 import {SQLite} from "@ionic-native/sqlite";
+import { DialogsProvider } from '../providers/dialogs/dialogs';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {SQLite} from "@ionic-native/sqlite";
     SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UtilsProvider,
-    DaoProvider
+    DaoProvider,
+    DialogsProvider
   ]
 })
 export class AppModule {}

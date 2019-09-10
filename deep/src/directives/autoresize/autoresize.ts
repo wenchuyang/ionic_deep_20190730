@@ -1,5 +1,6 @@
 import {Directive, ElementRef, HostListener} from '@angular/core';
 
+
 /**
  * Generated class for the AutoresizeDirective directive.
  *
@@ -7,7 +8,7 @@ import {Directive, ElementRef, HostListener} from '@angular/core';
  * Directives.
  */
 @Directive({
-  selector: 'ion-textarea[autoresize]' // Attribute selector
+  selector: '[autoresize]' // Attribute selector
 })
 export class AutoresizeDirective {
 
@@ -24,11 +25,12 @@ export class AutoresizeDirective {
   }
 
   adjust(): void {
-    let ta = this.element.nativeElement.querySelector("textarea");
+    let ta = this.element.nativeElement.querySelector("ion-textarea");
     if(ta !== null) {
       ta.style.overflow = "hidden";
       ta.style.height = "auto";
       ta.style.height = ta.scrollHeight + "px";
+      ta.scrollTop(ta[0].scrollHeight - ta.height());
     }
   }
 }

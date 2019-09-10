@@ -6,9 +6,15 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <div *ngFor="let note of notes" (click)="goToDetail(note.id, note.time, note.content)">
-    {{note.time | date:"MM/dd/yyyy HH:mm:ss"}}
-  </div>
-  <button ion-fab mini (click)="goToDetail()"><ion-icon name="add"></ion-icon></button>
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let note of notes" (click)="goToDetail(note.id, note.time, note.content)">
+      <h3>{{note.time | date:"MM/dd/yyyy HH:mm:ss"}}</h3>
+      <p class="one-line">{{note.content}}</p>
+    </button>
+  </ion-list>
+<!--  <ion-fab>-->
+<!--    <ion-fab-button (click)="goToDetail()"><ion-icon name="add"></ion-icon></ion-fab-button>-->
+<!--  </ion-fab>-->
+  <button class="float-right-bottom" ion-fab mini (click)="goToDetail()"><ion-icon name="add"></ion-icon></button>
 </ion-content>

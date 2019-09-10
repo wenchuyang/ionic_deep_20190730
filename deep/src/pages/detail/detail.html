@@ -6,12 +6,15 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title #noteTitle>{{date | date:"MM/dd/yyyy HH:mm:ss"}}</ion-title>
-    <button ion-button (click)="saveNote(noteTitle, note)">Save</button>
-    <button ion-button *ngIf="content" (click)="deleteNote()">Delete</button>
+    <ion-title class="title" #noteTitle>
+      <div class="item">{{date | date:"MM/dd/yyyy HH:mm:ss"}}</div>
+      <div class="item"><img class="icon" src="assets/icon/save.png" alt="Save" (click)="saveNote(noteTitle, note)"></div>
+      <div class="item"><img class="icon" src="assets/icon/delete.png" alt="Delete" *ngIf="content" (click)="deleteNote()"></div>
+    </ion-title>
+    
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-textarea #note autoresize placeholder="Enter notes here..." [value]="content"></ion-textarea>
+  <ion-textarea #note autoGrow autoresize placeholder="Enter notes here..." [value]="content"></ion-textarea>
 </ion-content>

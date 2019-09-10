@@ -1,5 +1,31 @@
 page-detail {
+  ion-header {
+    .title {
+      font-size: 18px;
+      .item {
+        margin-right: 1rem;
+        display: inline-block;
+        vertical-align: middle;
+        .icon {
+          width: 2.8rem;
+          vertical-align: text-top;
+        }
+      }
+    }
+  }
+  .scroll-content {
+    padding-bottom: 0 !important;
+  }
   ion-textarea {
-    height: 100vh;
+    height: 100%;
+    textarea {
+      //position: absolute;
+      //top: 0;
+      //bottom: 0;
+    }
+  }
+  textarea {
+    width: 100%;
+    height: 100%;
   }
 }
